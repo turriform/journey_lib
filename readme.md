@@ -1,5 +1,50 @@
 ## Journey log lib 
 
+1. wrappers for 
+* calloc
+* malloc
+* realloc
+* free
+
+locks if mutex is passed
+
+2. outputs memory stats, allocations and frees
+
+3. for the log type uses
+* jrn_debug();
+* jrn_info();
+* jrn_error();
+* jrn_warning(); 
+
+4. stacktraces up to limit
+
+5. outputs to
+* html
+* json
+* text
+* terminal *if stream is set to true
+
+6. can be initialized and destoryed multiple times with different settings
+
+example usage:
+* creates log in  ./log folder for the file log.json
+* records everything from debug level and up
+* terminal stream
+
+
+```c
+
+jrn_init("log", "log", LOG_LEVEL_DEBUG, LOG_FILE_JSON, true);
+
+...
+
+jrn_destroy();
+
+
+```
+
+
+
 
 ### Journey init function
 
