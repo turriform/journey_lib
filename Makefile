@@ -17,11 +17,18 @@ TARGET:=./bin/prog
 
 LIBS:= -luuid
 
+SQLITE_INCLUDE:= -I./third_party/sqlite/include
+SQLITE_LIB:= -L./third_party/sqlite/lib -lsqlite3
+
+INCLUDE+= $(SQLITE_INCLUDE)
+
+LIBS+= $(SQLITE_LIB)
+
 all: 
 	$(CC) $(SRC) $(FLAGS) $(INCLUDE) $(LIBS) -o $(TARGET) && $(TARGET)
 
 san: 
-	$(CC) $(SRC) $(FLAGS) -fsanitize=address $(INCLUDE) -o $(TARGET) && $(TARGET)
+	$(CC) $(SRC) $(FLAGS) -fsanitize=address $(INCLUDE) $(LIBS) -o $(TARGET) && $(TARGET)
 
 static: 
 	$(CC) $(SRC) $(STATIC_FLAGS) $(INCLUDE) -o $(TARGET) && $(TARGET)

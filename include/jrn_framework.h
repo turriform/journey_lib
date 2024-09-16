@@ -15,7 +15,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
-
+#include <sqlite3.h>
 
 #include <pthread.h>
 #include <errno.h>

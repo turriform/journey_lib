@@ -22,6 +22,12 @@ i_jrn_html_write_memory(char *template_dest)
 {
     jrn_memory_t *mem = i_jrn_settings.get_memory();
 
+    if (mem==NULL){
+        jrn_internal_signal(JRN_OK, "Memory is not initialized");
+        return;
+    }
+    
+
     char graph_buf[JRN_BUF] = "";
     jrn_memory_fill_graph(mem, graph_buf);
 

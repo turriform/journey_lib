@@ -85,6 +85,8 @@ struct IJrnSettings
 
     void                            (*set_is_ready_to_write)(bool is_ready);
 
+    sqlite3 *                       (*get_sqlite)(void);
+
     void                            *(*get_mutex)(void);
 
     jrn_memory_t                    *(*get_memory)(void);
@@ -97,13 +99,14 @@ typedef enum
 
     JRN_INFO_DIR,
     JRN_INFO_FILE,
+    JRN_INFO_DB,
     JRN_MUTEX_INFO,
     JRN_WARN_BUF,
     JRN_WARN_DOUBLE_FREE,
     JRN_ERR_STR,
     // Default critical error start here -> program will termiante at [JRN_INTERNAL_SHUTDOWN_SEVERITY]
-
     JRN_ERR_DIR,
+    JRN_ERR_DB,
     JRN_ERR_FILE,
     JRN_ERR_LSEEK,
     JRN_ERR_WRITE,

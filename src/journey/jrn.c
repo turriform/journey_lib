@@ -12,6 +12,7 @@ extern jrn_folder_t *jrn_folder_init_from_settings(void);
 extern void *jrn_folder_get_file_handler(void);
 
 extern void i_jrn_terminal_create_entry(jrn_record_t *record);
+extern void i_jrn_sqlite_create_entry(jrn_record_t *record);
 
 void jrn_log(jrn_level_t level_type, const char *__file__, size_t __line__, ...)
 {
@@ -83,13 +84,19 @@ void jrn_log(jrn_level_t level_type, const char *__file__, size_t __line__, ...)
 
     /* specific file format handeling*/
 
-    void (*filehandler)(jrn_record_t *record);
+    if (i_jrn_settings.get_filetype() < LOG_FILE_SQLITE)
+    {
+        void (*filehandler)(jrn_record_t *record);
 
-    *(void **)(&filehandler) = jrn_folder_get_file_handler();
+        *(void **)(&filehandler) = jrn_folder_get_file_handler();
 
-    filehandler(&record);
+        filehandler(&record);
+    }
 
-    // streaming
+    else
+    {
+        i_jrn_sqlite_create_entry(&record);
+    }
 
     if (i_jrn_settings.get_is_streaming())
     {
@@ -103,7 +110,8 @@ void jrn_log(jrn_level_t level_type, const char *__file__, size_t __line__, ...)
         free(stacktrace);
     }
 
-    if (level_type == LOG_LEVEL_ERROR){
+    if (level_type == LOG_LEVEL_ERROR)
+    {
         jrn_internal_signal(JRN_ERR, "Exiting on error");
     }
 }
@@ -123,7 +131,6 @@ void *jrn_malloc(size_t size, const char *__file__, size_t __line__)
     if (obj_ptr == NULL)
     {
         jrn_log(LOG_LEVEL_ERROR, __file__, __line__, "malloc error", NULL);
-
     }
 
     jrn_log(LOG_LEVEL_INFO, __file__, __line__, "Malloc ok", NULL);

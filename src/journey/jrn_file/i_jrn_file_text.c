@@ -10,7 +10,6 @@ jrn_file_try_get_or_create_default(void);
 extern void
 jrn_folder_write_to_current_file(int file_d, const char *message, size_t offset);
 
-
 void i_jrn_file_text_create_entry(jrn_record_t *record)
 {
 
@@ -21,28 +20,28 @@ void i_jrn_file_text_create_entry(jrn_record_t *record)
 
     char text_record[JRN_BUF] = "";
 
-    strncat(text_record, level_str, strlen(level_str));
-    strncat(text_record, "\t", JRN_BUF_16);
-    strncat(text_record, record->time, strlen(record->time));
-    strncat(text_record, "\t", JRN_BUF_16);
-    strncat(text_record, record->user, strlen(record->user));
-    strncat(text_record, "\t", JRN_BUF_16);
-    strncat(text_record, record->message, strlen(record->message));
-    strncat(text_record, "\t", JRN_BUF_16);
-    strncat(text_record, record->__file__, strlen(record->__file__));
-    strncat(text_record, "\t", JRN_BUF_16);
-    strncat(text_record, record->__line__, strlen(record->__line__));
-    strncat(text_record, "\n", JRN_BUF_16);
+    str_n_cat(text_record, level_str);
+    str_n_cat(text_record, "\t");
+    str_n_cat(text_record, record->time);
+    str_n_cat(text_record, "\t");
+    str_n_cat(text_record, record->user);
+    str_n_cat(text_record, "\t");
+    str_n_cat(text_record, record->message);
+    str_n_cat(text_record, "\t");
+    str_n_cat(text_record, record->__file__);
+    str_n_cat(text_record, "\t");
+    str_n_cat(text_record, record->__line__);
+    str_n_cat(text_record, "\n");
     if (record->stacktrace != NULL)
     {
 
         for (size_t i = 0; i != record->stacktrace_sz; i++)
         {
-            strncat(text_record, record->stacktrace[i], strlen(record->stacktrace[i]));
-            strncat(text_record, "\n", JRN_BUF_16);
+            str_n_cat(text_record, record->stacktrace[i]);
+            str_n_cat(text_record, "\n");
         }
     }
-    strncat(text_record, "\n", JRN_BUF_16);
+    str_n_cat(text_record, "\n");
 
     jrn_folder_write_to_current_file(file_d, text_record, 0);
 

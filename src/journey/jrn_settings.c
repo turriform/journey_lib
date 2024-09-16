@@ -7,6 +7,9 @@
 #define JRN_INTERNAL_REPORT
 
 extern jrn_folder_t *jrn_folder_init_from_settings(void);
+extern sqlite3 * jrn_sqlite_open_db(const char *db_file);
+
+
 extern void *jrn_folder_get_file_handler(void);
 
 struct JrnSettings
@@ -26,9 +29,12 @@ struct JrnSettings
     char                            logfolder_name[JRN_BUF_MAX_FILENAME]; //
     char                            basefile_name[JRN_BUF_MAX_FILENAME];  //
 
+    sqlite3 *                       db_sqlite;
+
     void *                          mutex;
 
     jrn_memory_t *                  memory;
+
 };
 
 jrn_settings_t jrn_settings = {
@@ -45,6 +51,7 @@ jrn_settings_t jrn_settings = {
     .logfolder_name         = JRN_DEFAULT_LOGFOLDER_NAME,
     .basefile_name          = JRN_DEFAULT_BASEFILE_NAME,
     .is_ready_to_write      = JRN_DEFAULT_IS_READY_TO_WRITE,
+    .db_sqlite              = NULL,
     .mutex                  = NULL,
     .memory                 = NULL,
 
@@ -64,6 +71,8 @@ bool                        jrn_get_is_recording_mutex(void)                { re
 const char *                jrn_get_logfolder_name(void)                    { return jrn_settings.logfolder_name; }
 const char *                jrn_get_basefile_name(void)                     { return jrn_settings.basefile_name; }
 
+sqlite3 *                   jrn_get_sqlite(void)                            { return jrn_settings.db_sqlite; }
+
 void *                      jrn_get_mutex(void)                             { return jrn_settings.mutex; }
 
 jrn_memory_t                *jrn_get_memory(void)                           { return jrn_settings.memory; }
@@ -71,7 +80,7 @@ jrn_memory_t                *jrn_get_memory(void)                           { re
 void                        jrn_set_is_ready_to_write(bool is_ready)        { jrn_settings.is_ready_to_write = is_ready; }
 size_t                      jrn_get_settings_sz(void)                       { return sizeof(jrn_settings); }
 
-const char *jrn_get_file_ext(void);
+const char *                jrn_get_file_ext(void);
 
 /* END JRN SETTINGS IFACE DEF*/
 
@@ -86,6 +95,8 @@ i_jrn_settings_t i_jrn_settings = {
     .get_is_ready_to_write                      = jrn_get_is_ready_to_write,
     .get_is_streaming                           = jrn_get_is_streaming,
     .get_is_recording_mutex                     = jrn_get_is_recording_mutex,
+
+    .get_sqlite                                 = jrn_get_sqlite,
 
     .get_mutex                                  = jrn_get_mutex,
     .get_memory                                 = jrn_get_memory,
@@ -183,7 +194,14 @@ void jrn_init(
 
     jrn_settings.memory = jrn_memory_init();
 
-    jrn_folder_init_from_settings();
+    if (filetype == LOG_FILE_SQLITE){
+   
+            jrn_settings.db_sqlite = jrn_sqlite_open_db("./database/log.sqlite3");
+    }
+    else{
+        
+        jrn_folder_init_from_settings();
+    }
 }
 
 void jrn_mutex_attach(void *mutex)
@@ -201,5 +219,12 @@ void jrn_destroy(void)
     {
 
         jrn_memory_free(jrn_settings.memory);
+        jrn_internal_signal(JRN_OK, "Memory ticks freed");
+
+    }
+
+    if (jrn_settings.db_sqlite){
+        sqlite3_close(jrn_settings.db_sqlite);
+        jrn_internal_signal(JRN_OK, "Closed sqlite");
     }
 }

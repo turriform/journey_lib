@@ -54,6 +54,20 @@ void test_double_free_json(void)
 	jrn_destroy();
 }
 
+void test_double_free_sqlite(void)
+{
+	jrn_init("test", "log", LOG_LEVEL_DEBUG, LOG_FILE_SQLITE, true);
+
+	// fail malloc
+	char *string = malloc(20);
+
+	free(string);
+	// warning triggered
+	free(string);
+	jrn_destroy();
+}
+
+
 void test_double_free_html(void)
 {
 	jrn_init("test", "log", LOG_LEVEL_DEBUG, LOG_FILE_HTML, true);
@@ -112,7 +126,8 @@ void test_init(void)
 void run_main_tests(void)
 {
 	// test_init();
-	test_double_free_html();
-	test_double_free_json();
+	// test_double_free_html();
+	// test_double_free_json();
+	test_double_free_sqlite();
 	test_error();
 }
