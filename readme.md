@@ -1,5 +1,9 @@
 ## Journey log lib 
 
+Dependencies
+* sqlite3 -- embeded
+* libuuid
+
 1. wrappers for 
 * calloc
 * malloc
@@ -76,7 +80,7 @@ shuts down everything journey related. mainly destroys the only dynamicly alloca
 * LOG_FILE_JSON
 * LOG_FILE_HTML
 * LOG_FILE_CSV (!) NOT IMPL
-* LOG_FILE_SQLITE (!) NOT IMPL
+* LOG_FILE_SQLITE 
 5. is_streaming -- will log everything in a terminal
 
 ### Mutex
@@ -164,4 +168,49 @@ General output for the JSON template
     }
     ]
 
+```
+### Notes on sqlite
+sqlite3 db is stored at ./database folder
+
+```c
+jrn_init("", "", LOG_LEVEL_DEBUG, LOG_FILE_SQLITE, true);
+//TODO: create separate init for SQLite
+
+jrn_destory();
+
+```
+
+
+```
+    SQL_STRUCTURE
+
+    record
+    *************************************
+
+        id:         |       primary key
+        uuid:       |       varchar
+        type:       |       varchar
+        time:       |       integer
+        user:       |       varchar
+        message:    |       varchar
+        file:       |       varchar
+        line:       |       integer
+
+    *************************************
+
+    stacktrace
+    *************************************
+        id:         |       primary key
+        record_uuid:|       varchar
+        line:       |       varchar
+
+    *************************************
+
+    mem
+    *************************************
+        id:         |       primary key
+        record_uuid:|       varchar
+        values:     |       varchar
+
+    *************************************
 ```

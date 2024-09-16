@@ -125,9 +125,9 @@ void test_init(void)
 
 void run_main_tests(void)
 {
-	// test_init();
-	// test_double_free_html();
-	// test_double_free_json();
+	test_init();
+	test_double_free_html();
+	test_double_free_json();
 	test_double_free_sqlite();
 	test_error();
 }

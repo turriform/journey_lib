@@ -1,4 +1,4 @@
-#include "jrn_sqlite.h"
+
 #include "jrn_internal.h"
 #include "jrn_record.h"
 #include "jrn_memory.h"
