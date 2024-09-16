@@ -18,8 +18,8 @@ shuts down everything journey related. mainly destroys the only dynamicly alloca
 */
 ```
 
-1. logfolder_name The name of the folder where you would like to store   your log eg: log; test_log etc, WARNING: only relative path is accepted
-2. basefile_name -- the base filename for the log file eg: log; special-log etc
+1. logfolder_name name of the folder where you would like to store   your log eg: log; test_log etc, WARNING: only relative path is accepted
+2. basefile_name  base filename for the log file eg: log; special-log etc
 3. level: 
 * LOG_LEVEL_DEBUG
 * LOG_LEVEL_INFO
