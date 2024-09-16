@@ -1,0 +1,71 @@
+html>body {
+  font-family: "Noto Sans Mono", monospace;
+  background-color: #e0e0e0;
+  font-size: 12px;
+}
+
+
+
+table {
+  background-color: white;
+  border-radius: 10px;
+
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  padding: 10px 0;
+  background-color: #e0e0e0;
+
+  z-index: 1000;
+}
+
+tr.record {
+  background-color: #e0e0e0;
+}
+
+.templates .content {
+  margin: auto;
+  max-width: 1024px;
+}
+
+.templates .content {
+  padding: 40px 0;
+}
+
+.templates .template {
+  margin-left: -16px;
+}
+
+.template {
+  width: 100%;
+  margin-bottom: 72px;
+  align-items: flex-start;
+}
+
+.template>.template__meta {
+  align-content: flex-start;
+  padding-left: 24px;
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+
+th.Info {
+  color: rgb(115, 192, 38);
+}
+
+th.Warning {
+  color: coral;
+}
+
+th.Error {
+  color: rgb(235, 64, 52);
+}
+
+th.Debug {
+  color: rgb(234, 127, 255);
+}
