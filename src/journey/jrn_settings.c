@@ -11,65 +11,65 @@ extern void *jrn_folder_get_file_handler(void);
 
 struct JrnSettings
 {
-    bool is_set;
-    jrn_file_type_t filetype;       //
-    jrn_level_t level;              //
-    jrn_level_t backtrace_level_on; //
-    jrn_level_t memory_on_at;       //
-    uint32_t max_file_size;
+    bool                            is_set;
+    jrn_file_type_t                 filetype;       //
+    jrn_level_t                     level;              //
+    jrn_level_t                     backtrace_level_on; //
+    jrn_level_t                     memory_on_at;       //
+    uint32_t                        max_file_size;
 
-    uint8_t backtrace_limit; //
-    bool is_streaming;       //
-    bool is_recording_mutex; //
-    bool is_ready_to_write;  //
+    uint8_t                         backtrace_limit; //
+    bool                            is_streaming;       //
+    bool                            is_recording_mutex; //
+    bool                            is_ready_to_write;  //
 
-    char logfolder_name[JRN_BUF_MAX_FILENAME]; //
-    char basefile_name[JRN_BUF_MAX_FILENAME];  //
+    char                            logfolder_name[JRN_BUF_MAX_FILENAME]; //
+    char                            basefile_name[JRN_BUF_MAX_FILENAME];  //
 
-    void *mutex;
+    void *                          mutex;
 
-    jrn_memory_t *memory;
+    jrn_memory_t *                  memory;
 };
 
 jrn_settings_t jrn_settings = {
-    .is_set = false,
+    .is_set                 = false,
 
-    .filetype = JRN_DEFAULT_FILETYPE,
-    .level = JRN_DEFAULT_LEVEL,
-    .backtrace_level_on = JRN_DEFAULT_BACKTRACE_LEVEL_ON,
-    .memory_on_at = JRN_DEFAULT_MEMORY_ON_AT,
-    .max_file_size = JRN_DEFAULT_MAX_FILE_SIZE,
-    .backtrace_limit = JRN_DEFAULT_BACKTRACE_LIMIT,
-    .is_streaming = JRN_DEFAULT_IS_STREAMING,
-    .is_recording_mutex = JRN_DEFAULT_IS_RECORDING_MUTEX,
-    .logfolder_name = JRN_DEFAULT_LOGFOLDER_NAME,
-    .basefile_name = JRN_DEFAULT_BASEFILE_NAME,
-    .is_ready_to_write = JRN_DEFAULT_IS_READY_TO_WRITE,
-    .mutex = NULL,
-    .memory = NULL,
+    .filetype               = JRN_DEFAULT_FILETYPE,
+    .level                  = JRN_DEFAULT_LEVEL,
+    .backtrace_level_on     = JRN_DEFAULT_BACKTRACE_LEVEL_ON,
+    .memory_on_at           = JRN_DEFAULT_MEMORY_ON_AT,
+    .max_file_size          = JRN_DEFAULT_MAX_FILE_SIZE,
+    .backtrace_limit        = JRN_DEFAULT_BACKTRACE_LIMIT,
+    .is_streaming           = JRN_DEFAULT_IS_STREAMING,
+    .is_recording_mutex     = JRN_DEFAULT_IS_RECORDING_MUTEX,
+    .logfolder_name         = JRN_DEFAULT_LOGFOLDER_NAME,
+    .basefile_name          = JRN_DEFAULT_BASEFILE_NAME,
+    .is_ready_to_write      = JRN_DEFAULT_IS_READY_TO_WRITE,
+    .mutex                  = NULL,
+    .memory                 = NULL,
 
 };
 
 // Setting an interface, simple getters for variouse uses
 /* START JRN SETTINGS IFACE DEF*/
-jrn_file_type_t         jrn_get_filetype(void)      { return jrn_settings.filetype; }
-jrn_level_t             jrn_get_level(void) { return jrn_settings.level; }
-jrn_level_t jrn_get_backtrace_level_on(void) { return jrn_settings.backtrace_level_on; }
-jrn_level_t jrn_get_memory_on_at(void) { return jrn_settings.memory_on_at; }
-uint32_t jrn_get_max_file_size(void) { return jrn_settings.max_file_size; }
-uint8_t jrn_get_backtrace_limit(void) { return jrn_settings.backtrace_limit; }
-bool jrn_get_is_ready_to_write(void) { return jrn_settings.is_ready_to_write; }
-bool jrn_get_is_streaming(void) { return jrn_settings.is_streaming; }
-bool jrn_get_is_recording_mutex(void) { return jrn_settings.is_recording_mutex; }
-const char *jrn_get_logfolder_name(void) { return jrn_settings.logfolder_name; }
-const char *jrn_get_basefile_name(void) { return jrn_settings.basefile_name; }
+jrn_file_type_t             jrn_get_filetype(void)                          { return jrn_settings.filetype; }
+jrn_level_t                 jrn_get_level(void)                             { return jrn_settings.level; }
+jrn_level_t                 jrn_get_backtrace_level_on(void)                { return jrn_settings.backtrace_level_on; }
+jrn_level_t                 jrn_get_memory_on_at(void)                      { return jrn_settings.memory_on_at; }
+uint32_t                    jrn_get_max_file_size(void)                     { return jrn_settings.max_file_size; }
+uint8_t                     jrn_get_backtrace_limit(void)                   { return jrn_settings.backtrace_limit; }
+bool                        jrn_get_is_ready_to_write(void)                 { return jrn_settings.is_ready_to_write; }
+bool                        jrn_get_is_streaming(void)                      { return jrn_settings.is_streaming; }
+bool                        jrn_get_is_recording_mutex(void)                { return jrn_settings.is_recording_mutex; }
+const char *                jrn_get_logfolder_name(void)                    { return jrn_settings.logfolder_name; }
+const char *                jrn_get_basefile_name(void)                     { return jrn_settings.basefile_name; }
 
-void *jrn_get_mutex(void) { return jrn_settings.mutex; }
+void *                      jrn_get_mutex(void)                             { return jrn_settings.mutex; }
 
-jrn_memory_t *jrn_get_memory(void) { return jrn_settings.memory; }
+jrn_memory_t                *jrn_get_memory(void)                           { return jrn_settings.memory; }
 
-void jrn_set_is_ready_to_write(bool is_ready) { jrn_settings.is_ready_to_write = is_ready; }
-size_t jrn_get_settings_sz(void) { return sizeof(jrn_settings); }
+void                        jrn_set_is_ready_to_write(bool is_ready)        { jrn_settings.is_ready_to_write = is_ready; }
+size_t                      jrn_get_settings_sz(void)                       { return sizeof(jrn_settings); }
 
 const char *jrn_get_file_ext(void);
 
@@ -77,28 +77,28 @@ const char *jrn_get_file_ext(void);
 
 i_jrn_settings_t i_jrn_settings = {
 
-    .get_filetype = jrn_get_filetype,
-    .get_level = jrn_get_level,
-    .get_backtrace_level_on = jrn_get_backtrace_level_on,
-    .get_memory_on_at = jrn_get_memory_on_at,
-    .get_max_file_size = jrn_get_max_file_size,
-    .get_backtrace_limit = jrn_get_backtrace_limit,
-    .get_is_ready_to_write = jrn_get_is_ready_to_write,
-    .get_is_streaming = jrn_get_is_streaming,
-    .get_is_recording_mutex = jrn_get_is_recording_mutex,
+    .get_filetype                               = jrn_get_filetype,
+    .get_level                                  = jrn_get_level,
+    .get_backtrace_level_on                     = jrn_get_backtrace_level_on,
+    .get_memory_on_at                           = jrn_get_memory_on_at,
+    .get_max_file_size                          = jrn_get_max_file_size,
+    .get_backtrace_limit                        = jrn_get_backtrace_limit,
+    .get_is_ready_to_write                      = jrn_get_is_ready_to_write,
+    .get_is_streaming                           = jrn_get_is_streaming,
+    .get_is_recording_mutex                     = jrn_get_is_recording_mutex,
 
-    .get_mutex = jrn_get_mutex,
-    .get_memory = jrn_get_memory,
+    .get_mutex                                  = jrn_get_mutex,
+    .get_memory                                 = jrn_get_memory,
 
-    .get_logfolder_name = jrn_get_logfolder_name,
-    .get_basefile_name = jrn_get_basefile_name,
-    .get_settings_sz = jrn_get_settings_sz,
+    .get_logfolder_name                         = jrn_get_logfolder_name,
+    .get_basefile_name                          = jrn_get_basefile_name,
+    .get_settings_sz                            = jrn_get_settings_sz,
 
-    .get_file_ext = jrn_get_file_ext,
+    .get_file_ext                               = jrn_get_file_ext,
 
     /////
 
-    .set_is_ready_to_write = jrn_set_is_ready_to_write,
+    .set_is_ready_to_write                      = jrn_set_is_ready_to_write,
 };
 
 const char *
@@ -113,8 +113,8 @@ const char *
 jrn_get_archive_name(void)
 {
     return jrn_settings.filetype == LOG_FILE_HTML ? "log_html.tar.gz" : jrn_settings.filetype == LOG_FILE_CSV ? "log_csv.tar.gz"
-                                                          : jrn_settings.filetype == LOG_FILE_JSON  ? "log_json.tar.gz"
-                                                                                                    : "log_txt.tar.gz";
+                                                                    : jrn_settings.filetype == LOG_FILE_JSON  ? "log_json.tar.gz"
+                                                                                                              : "log_txt.tar.gz";
 }
 
 const char *
@@ -165,9 +165,9 @@ void jrn_internal_signal_m(jrn_status_t status, const char *message, const char 
 /*PUBLIC FUNCTIONS DEFINITIONS*/
 
 void jrn_init(
-    const char *logfolder_name, 
-    const char *basefile_name, 
-    jrn_level_t level, 
+    const char *logfolder_name,
+    const char *basefile_name,
+    jrn_level_t level,
     jrn_file_type_t filetype,
     bool is_streaming)
 {
@@ -177,18 +177,23 @@ void jrn_init(
 
     jrn_settings.filetype = filetype;
     jrn_settings.level = level;
-    jrn_settings.is_streaming = is_streaming;   
-
+    jrn_settings.is_streaming = is_streaming;
 
     jrn_settings.is_set = true;
-    
+
     jrn_settings.memory = jrn_memory_init();
 
     jrn_folder_init_from_settings();
 }
 
-
-
+void jrn_mutex_attach(void *mutex)
+{
+    jrn_settings.mutex = mutex;
+}
+void jrn_mutex_detach(void)
+{
+    jrn_settings.mutex = NULL;
+}
 
 void jrn_destroy(void)
 {

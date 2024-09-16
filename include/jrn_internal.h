@@ -6,18 +6,18 @@
 #define str_n_cmp(dest, src) strncmp((char *)(dest), (const char *)(src), strlen((const char *)(src)))
 
 // Global types
-typedef struct JrnSettings jrn_settings_t;
-typedef struct JrnFolder jrn_folder_t;
+typedef struct      JrnSettings             jrn_settings_t;
+typedef struct      JrnFolder               jrn_folder_t;
 
 // Global types ifaces
-typedef struct IJrnSettings i_jrn_settings_t;
-typedef struct IJrnMemory i_jrn_memory_t;
+typedef struct      IJrnSettings            i_jrn_settings_t;
+typedef struct      IJrnMemory              i_jrn_memory_t;
 
 // Utility types
-typedef struct JrnFile jrn_file_t;
-typedef struct JrnMemory jrn_memory_t;
-typedef struct JrnMemoryTick jrn_memory_tick_t;
-typedef struct JrnRecord jrn_record_t;
+typedef struct      JrnFile                 jrn_file_t;
+typedef struct      JrnMemory               jrn_memory_t;
+typedef struct      JrnMemoryTick           jrn_memory_tick_t;
+typedef struct      JrnRecord               jrn_record_t;
 
 typedef enum
 {
@@ -44,17 +44,17 @@ typedef enum
 
 /* Defaults */
 
-#define JRN_DEFAULT_FILETYPE LOG_FILE_HTML             /* default filetype */
-#define JRN_DEFAULT_LEVEL LOG_LEVEL_DEBUG              /* log level from debug and up*/
-#define JRN_DEFAULT_IS_STREAMING true                  /* will output log realite */
-#define JRN_DEFAULT_BACKTRACE_LIMIT 5U                 /* stack shows 5 records*/
-#define JRN_DEFAULT_BACKTRACE_LEVEL_ON LOG_LEVEL_DEBUG /* backtrace called only on errors */
-#define JRN_DEFAULT_MEMORY_ON_AT LOG_LEVEL_DEBUG       /* mem display starts */
-#define JRN_DEFAULT_LOGFOLDER_NAME "log"               /* log folder relative path*/
-#define JRN_DEFAULT_BASEFILE_NAME "log"                /* basefilename for log*/
-#define JRN_DEFAULT_IS_RECORDING_MUTEX true            /* will log all mutex locks and unlocks*/
-#define JRN_DEFAULT_MAX_FILE_SIZE 512U * 1024U
-#define JRN_DEFAULT_IS_READY_TO_WRITE false
+#define JRN_DEFAULT_FILETYPE                            LOG_FILE_HTML             /* default filetype */
+#define JRN_DEFAULT_LEVEL                               LOG_LEVEL_DEBUG              /* log level from debug and up*/
+#define JRN_DEFAULT_IS_STREAMING                        true                  /* will output log realite */
+#define JRN_DEFAULT_BACKTRACE_LIMIT                     5U                 /* stack shows 5 records*/
+#define JRN_DEFAULT_BACKTRACE_LEVEL_ON                  LOG_LEVEL_DEBUG /* backtrace called only on errors */
+#define JRN_DEFAULT_MEMORY_ON_AT                        LOG_LEVEL_DEBUG       /* mem display starts */
+#define JRN_DEFAULT_LOGFOLDER_NAME                      "log"               /* log folder relative path*/
+#define JRN_DEFAULT_BASEFILE_NAME                       "log"                /* basefilename for log*/
+#define JRN_DEFAULT_IS_RECORDING_MUTEX                  true            /* will log all mutex locks and unlocks*/
+#define JRN_DEFAULT_MAX_FILE_SIZE                       512U * 1024U
+#define JRN_DEFAULT_IS_READY_TO_WRITE                   false
 
 /* Main journey functions*/
 
@@ -68,26 +68,26 @@ void jrn_free(void **ptr, const char *__file__, size_t __line__);
 
 struct IJrnSettings
 {
-    jrn_file_type_t (*get_filetype)(void);
-    jrn_level_t (*get_level)(void);
-    jrn_level_t (*get_backtrace_level_on)(void);
-    jrn_level_t (*get_memory_on_at)(void);
-    uint32_t (*get_max_file_size)(void);
-    uint8_t (*get_backtrace_limit)(void);
-    bool (*get_is_streaming)(void);
-    bool (*get_is_recording_mutex)(void);
-    bool (*get_is_ready_to_write)(void);
-    const char *(*get_logfolder_name)(void);
-    const char *(*get_basefile_name)(void);
+    jrn_file_type_t                 (*get_filetype)(void);
+    jrn_level_t                     (*get_level)(void);
+    jrn_level_t                     (*get_backtrace_level_on)(void);
+    jrn_level_t                     (*get_memory_on_at)(void);
+    uint32_t                        (*get_max_file_size)(void);
+    uint8_t                         (*get_backtrace_limit)(void);
+    bool                            (*get_is_streaming)(void);
+    bool                            (*get_is_recording_mutex)(void);
+    bool                            (*get_is_ready_to_write)(void);
+    const char *                    (*get_logfolder_name)(void);
+    const char *                    (*get_basefile_name)(void);
 
-    const char *(*get_file_ext)(void);
-    size_t (*get_settings_sz)(void);
+    const char *                    (*get_file_ext)(void);
+    size_t                          (*get_settings_sz)(void);
 
-    void (*set_is_ready_to_write)(bool is_ready);
+    void                            (*set_is_ready_to_write)(bool is_ready);
 
-    void *(*get_mutex)(void);
+    void                            *(*get_mutex)(void);
 
-    jrn_memory_t *(*get_memory)(void);
+    jrn_memory_t                    *(*get_memory)(void);
 };
 
 /* Journey internal status */
